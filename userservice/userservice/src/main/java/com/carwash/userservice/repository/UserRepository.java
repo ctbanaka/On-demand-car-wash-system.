@@ -21,4 +21,6 @@ public interface UserRepository extends MongoRepository<User,Integer> {
     @Query("{role: '?0' }")
     Optional<List<User>> findUserByRole(String role);
 
+    @Query("{userName:'?0'}")
+    User getByUserName(String userName);
 }

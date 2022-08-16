@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void createUser(UserDto userDto);
+    String createUser(UserDto userDto);
 
     Optional<User> gatUserByUserName(String userName);
 
@@ -16,7 +16,7 @@ public interface UserService {
 
     Optional<List<User>> getUsersByRole(String role);
 
-    void updateUser(UserDto userDto);
+    String updateUser(UserDto userDto);
 
     void deleteUser(String userName);
 

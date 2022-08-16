@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+
+server:
+  port: 9000
+
+
+
+zuul:
+   routes:
+     user-service:
+       path: /user/**
+#       uri: lb://user-service
+
+
+
+     package-service:
+        path: /package/**
+        uri: lb://package-service

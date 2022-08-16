@@ -1,7 +1,6 @@
 package com.carwash.userservice.service;
 
 import com.carwash.userservice.exception.*;
-import com.carwash.userservice.model.Role;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.model.UserDto;
 import com.carwash.userservice.repository.UserRepository;
@@ -22,13 +21,15 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public void createUser(UserDto userDto){
+    public String createUser(UserDto userDto){
     	User user= new User();
     	user.setUserId(seqService.getSequenceNumber(User.SEQUENCE_NAME));
 
     	Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
     	if(user1.isPresent())
     		throw new UserNameException("username already taken, choose new username");
+    	if(userDto.getUserName().length()<3)
+    		throw new UserNameException("username should contain more then three charecters");
     	user.setUserName(userDto.getUserName());
 
     	if(userDto.getFullName().isEmpty())
@@ -67,9 +68,8 @@ public class UserServiceImpl implements UserService{
     	user.setPassword(userDto.getPassword());
 
     	user.setIsActive(true);
-
-
         userRepository.save(user);
+        return user.getUserName();
     }
 
     public Optional<User> gatUserByUserName(String userName){
@@ -92,8 +92,53 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updateUser(UserDto userDto) {
-        this.createUser(userDto);
+	public String updateUser(UserDto userDto) {
+		Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
+    	if(user1.isEmpty())
+    		throw new UserNameException("account not found with this username");
+
+    	User user=userRepository.getByUserName(userDto.getUserName());
+		user.setUserName(userDto.getUserName());
+
+		if(userDto.getFullName().isEmpty())
+			throw new NameException("Name can't be blank");
+		user.setFullName(userDto.getFullName());
+
+		if(userDto.getAge()<18 || userDto.getAge()>81)
+			throw new InvalidAgeException("please enter valid age");
+		user.setAge(userDto.getAge());
+
+		if(userDto.getRole().name().contains("USER") || userDto.getRole().name().contains("WASHER")) {
+			user.setRole(userDto.getRole());
+		}else {
+			throw new InvalidRoleException("choose either USER or WASHER");
+		}
+
+		user.setGender(userDto.getGender());
+
+		if(!(userDto.getEmail().contains("@")) && (userDto.getEmail().contains(".")))
+			throw new InvalidEmailException("please enter valid email");
+		user.setEmail(userDto.getEmail());
+
+		if(!PhoneNumberValidation.isValidMobileNo(userDto.getPhoneNo()))
+			throw new PhoneNoException("invalid phone number");
+		user.setPhoneNo(userDto.getPhoneNo());
+
+
+
+		Optional<User> user2=userRepository.findByPhoneNo(userDto.getPhoneNo());
+		if(user2.isPresent())
+			throw new PhoneNoException("someone is rigistered with this number enter new");
+		user.setPhoneNo(userDto.getPhoneNo());
+
+		if(userDto.getPassword().length()<8)
+			throw new PasswordException("password should be more then 8 charecters");
+		user.setPassword(userDto.getPassword());
+
+		user.setIsActive(true);
+		userRepository.save(user);
+		return user.getUserName();
+
 	}
 
 	@Override

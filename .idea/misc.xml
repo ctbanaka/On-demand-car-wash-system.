@@ -9,6 +9,8 @@
         <option value="$PROJECT_DIR$/washerservice/washerservice/pom.xml" />
         <option value="$PROJECT_DIR$/packageservice/packageservice/pom.xml" />
         <option value="$PROJECT_DIR$/api-gateway (1)/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/api-gateway/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/locationservice/locationservice/pom.xml" />
       </list>
     </option>
   </component>
