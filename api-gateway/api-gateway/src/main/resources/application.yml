@@ -7,10 +7,11 @@ server:
 
 
 
+
 zuul:
    routes:
      user-service:
-#       path: /users/**
+       path: /user-service/**
        uri: lb://user-service
 
 

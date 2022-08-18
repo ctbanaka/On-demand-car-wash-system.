@@ -56,7 +56,7 @@ public class UserController {
 
    @PostMapping("/user/admin-signup")
    public ResponseEntity<String> createAdmin(@RequestBody UserDto userDto){
-       Integer id=userService.createAdmin(userDto);
-       return new ResponseEntity<>("admin account created with id "+id,HttpStatus.OK);
+       String username=userService.createAdmin(userDto);
+       return new ResponseEntity<>("admin account created with id "+username,HttpStatus.OK);
    }
 }

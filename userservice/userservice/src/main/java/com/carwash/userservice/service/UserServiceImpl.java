@@ -14,17 +14,13 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService{
 
-	@Autowired
-	private SequenceGeneratorService seqService;
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public User createUser(UserDto userDto){
-    	User user= new User();
-    	user.setUserId(seqService.getSequenceNumber(User.SEQUENCE_NAME));
-
+		User user= new User();
     	Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
     	if(user1.isPresent())
     		throw new UserNameException("username already taken, choose new username");
@@ -151,10 +147,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Integer createAdmin(UserDto userDto) {
+	public String createAdmin(UserDto userDto) {
 		User user= new User();
-		user.setUserId(seqService.getSequenceNumber(User.SEQUENCE_NAME));
-
 		Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
 		if(user1.isPresent())
 			throw new UserNameException("username already taken, choose new username");
@@ -195,7 +189,7 @@ public class UserServiceImpl implements UserService{
 		user.setIsActive(true);
 
 		userRepository.save(user);
-		return user.getUserId();
+		return user.getUserName();
 	}
 
 }

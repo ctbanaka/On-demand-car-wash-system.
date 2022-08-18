@@ -1,5 +1,6 @@
 package com.carwash.apigateway.service;
 
+
 import com.carwash.apigateway.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,15 +19,15 @@ public class MyUserDetails implements UserDetails {
     private List<GrantedAuthority> authorities;
 
 
-    public MyUserDetails(User user){
-        this.userName=user.getUserName();
-        this.password=user.getPassword();
-        this.isActive=user.getIsActive();
-        this.authorities= Arrays.stream(user.getRole().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
 
-    }
+    public MyUserDetails(User user) {
+            this.userName = user.getUserName();
+            this.password = user.getPassword();
+            this.authorities = Arrays.stream(user.getRole().split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+
+        }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,6 +61,6 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isActive;
+        return  true;
     }
 }

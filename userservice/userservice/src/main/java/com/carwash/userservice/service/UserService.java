@@ -20,5 +20,5 @@ public interface UserService {
 
     void deleteUser(String userName);
 
-    Integer createAdmin(UserDto userDto);
+    String createAdmin(UserDto userDto);
 }
