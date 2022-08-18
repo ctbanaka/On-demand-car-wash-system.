@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
     @Override
-    public String createUser(UserDto userDto){
+    public User createUser(UserDto userDto){
     	User user= new User();
     	user.setUserId(seqService.getSequenceNumber(User.SEQUENCE_NAME));
 
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService{
 
     	user.setIsActive(true);
         userRepository.save(user);
-        return user.getUserName();
+        return user;
     }
 
     public Optional<User> gatUserByUserName(String userName){

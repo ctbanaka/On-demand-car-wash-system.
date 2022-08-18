@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    String createUser(UserDto userDto);
+    User createUser(UserDto userDto);
 
     Optional<User> gatUserByUserName(String userName);
 

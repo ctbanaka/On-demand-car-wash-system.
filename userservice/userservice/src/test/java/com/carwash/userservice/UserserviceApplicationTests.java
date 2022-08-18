@@ -12,7 +12,5 @@ class UserserviceApplicationTests {
 	void contextLoads() {
 	}
 
-	public UserServiceImpl getBean(){
-		return new UserServiceImpl();
-	}
+
 }

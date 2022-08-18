@@ -3,6 +3,7 @@ import com.mongodb.lang.NonNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -33,7 +34,6 @@ public class User {
     private int age;
     @NonNull
     private Role role;
-
     private Boolean isActive;
 
 }
