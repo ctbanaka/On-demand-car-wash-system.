@@ -1,5 +1,6 @@
 package com.carwash.userservice.service;
 
+import com.carwash.userservice.model.LoginResponse;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.model.UserDto;
 
@@ -21,4 +22,6 @@ public interface UserService {
     void deleteUser(String userName);
 
     String createAdmin(UserDto userDto);
+
+    LoginResponse userLoginResponse(String userName);
 }

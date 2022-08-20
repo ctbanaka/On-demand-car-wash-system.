@@ -1,4 +1,4 @@
-package com.carwash.apigateway.model;
+package com.carwash.apigatewaysecurity.models;
 
 import java.io.Serializable;
 
@@ -7,8 +7,11 @@ public class AuthenticationRequest implements Serializable {
 	private String userName;
 	private String password;
 
+	public String getUserName() {
+		return userName;
+	}
 
-	public void setUsername(String username) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
@@ -20,20 +23,13 @@ public class AuthenticationRequest implements Serializable {
 		this.password = password;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
+	// need default constructor for JSON Parsing
 	public AuthenticationRequest() {
 
 	}
 
 	public AuthenticationRequest(String username, String password) {
-		this.setUsername(username);
-		this.setPassword(password);
+		this.userName = username;
+		this.password = password;
 	}
 }

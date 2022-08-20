@@ -1,5 +1,6 @@
 package com.carwash.userservice.controller;
 
+import com.carwash.userservice.model.LoginResponse;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.model.UserDto;
 import com.carwash.userservice.service.UserServiceImpl;
@@ -58,5 +59,11 @@ public class UserController {
    public ResponseEntity<String> createAdmin(@RequestBody UserDto userDto){
        String username=userService.createAdmin(userDto);
        return new ResponseEntity<>("admin account created with id "+username,HttpStatus.OK);
+   }
+
+   @GetMapping("/{userName}")
+    public  ResponseEntity<LoginResponse> loginResponse(@PathVariable String userName){
+        LoginResponse response=userService.userLoginResponse(userName);
+        return new ResponseEntity<>(response,HttpStatus.OK) ;
    }
 }

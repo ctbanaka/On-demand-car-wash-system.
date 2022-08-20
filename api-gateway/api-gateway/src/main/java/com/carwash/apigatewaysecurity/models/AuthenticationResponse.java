@@ -1,4 +1,4 @@
-package com.carwash.apigateway.model;
+package com.carwash.apigatewaysecurity.models;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.carwash.apigateway.util;
+package com.carwash.apigatewaysecurity.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

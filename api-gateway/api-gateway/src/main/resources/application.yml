@@ -1,21 +1,24 @@
 spring:
   application:
-    name: GATEWAY-SERVICE
-
-server:
-  port: 9000
-
-
-
+    name: GATEWAY-SERVICE-SECURITY
 
 zuul:
    routes:
      user-service:
-       path: /user-service/**
-       uri: lb://user-service
+       serviceId: user-service
 
 
-
-     package-service:
-        path: /package/**
-        uri: lb://package-service
+#     plan-service:
+#        path: /plan/**
+#        uri: lb://plan-service
+#
+#     promocode-service:
+#       #path: /promo/**
+#       uri: lb://promocode-service
+          
+        
+                
+server:
+  port: 9000
+  
+ 

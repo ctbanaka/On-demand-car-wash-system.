@@ -1,6 +1,7 @@
 package com.carwash.userservice.service;
 
 import com.carwash.userservice.exception.*;
+import com.carwash.userservice.model.LoginResponse;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.model.UserDto;
 import com.carwash.userservice.repository.UserRepository;
@@ -18,9 +19,13 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+	private SequenceGeneratorService seqService;
+
     @Override
     public User createUser(UserDto userDto){
 		User user= new User();
+		user.setUserId(seqService.getSequenceNumber(User.SEQUENCE_NAME));
     	Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
     	if(user1.isPresent())
     		throw new UserNameException("username already taken, choose new username");
@@ -149,6 +154,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public String createAdmin(UserDto userDto) {
 		User user= new User();
+		user.setUserId(seqService.getSequenceNumber(User.SEQUENCE_NAME));
 		Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
 		if(user1.isPresent())
 			throw new UserNameException("username already taken, choose new username");
@@ -190,6 +196,24 @@ public class UserServiceImpl implements UserService{
 
 		userRepository.save(user);
 		return user.getUserName();
+	}
+
+
+	public LoginResponse userLoginResponse(String userName){
+		Optional<User> user=userRepository.findByUserName(userName);
+		if(user.isEmpty()) {
+			throw new UserNameException("account not found with this username");
+		}
+		LoginResponse response=new LoginResponse();
+		response.setUserId(user.get().getUserId());
+		response.setUserName(user.get().getUserName());
+		response.setPassword(user.get().getPassword());
+		response.setRole(user.get().getRole().name());
+
+		return response;
+
+
+
 	}
 
 }

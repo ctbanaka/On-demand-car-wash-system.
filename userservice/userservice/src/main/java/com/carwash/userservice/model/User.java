@@ -17,7 +17,10 @@ import javax.validation.constraints.NotEmpty;
 @Document(collection = "users")
 public class User {
 
-    @Id
+    @Transient
+    public static final String SEQUENCE_NAME = "user_sequence";
+     @Id
+    private int userId;
     private String userName;
     @NonNull
     private String fullName;

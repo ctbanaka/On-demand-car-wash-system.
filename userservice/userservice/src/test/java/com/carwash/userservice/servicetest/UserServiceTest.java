@@ -40,8 +40,8 @@ public class UserServiceTest {
     @Test
     void testGetUsers(){
         when(userRepository.findAll()).thenReturn(Stream
-           .of(new User("max", "maxwell", MALE, "9538836988", "chetan@g.com", "helloo12",  23, WASHER,true),
-             new User("maxi", "maxwell", MALE, "9538836987", "chetan@g.com", "helloo12",  23, WASHER,true)).collect(Collectors.toList()));
+           .of(new User(100,"max", "maxwell", MALE, "9538836988", "chetan@g.com", "helloo12",  23, WASHER,true),
+             new User(101,"maxi", "maxwell", MALE, "9538836987", "chetan@g.com", "helloo12",  23, WASHER,true)).collect(Collectors.toList()));
         assertEquals(2, userService.getAllUsers().size());
     }
 
