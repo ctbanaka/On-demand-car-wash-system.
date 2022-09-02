@@ -1,16 +1,16 @@
 package com.carwash.userservice.service;
 
 import com.carwash.userservice.exception.*;
-import com.carwash.userservice.model.LoginResponse;
-import com.carwash.userservice.model.User;
-import com.carwash.userservice.model.UserDto;
+import com.carwash.userservice.model.*;
 import com.carwash.userservice.repository.UserRepository;
 import com.carwash.userservice.util.PhoneNumberValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -37,17 +37,8 @@ public class UserServiceImpl implements UserService{
     		throw new NameException("Name can't be blank");
     	user.setFullName(userDto.getFullName());
 
-		if(userDto.getAge()<18 || userDto.getAge()>81)
-			throw new InvalidAgeException("please enter valid age");
-		user.setAge(userDto.getAge());
-
-		if(userDto.getRole().name().contains("USER") || userDto.getRole().name().contains("WASHER")) {
-			user.setRole(userDto.getRole());
-		}else {
-			throw new InvalidRoleException("choose either USER or WASHER");
-		}
-
-		user.setGender(userDto.getGender());
+		 Role role= Role.USER;
+			user.setRole(role);
 
         if(!(userDto.getEmail().contains("@")) && (userDto.getEmail().contains(".")))
        	  throw new InvalidEmailException("please enter valid email");
@@ -56,8 +47,6 @@ public class UserServiceImpl implements UserService{
     	if(!PhoneNumberValidation.isValidMobileNo(userDto.getPhoneNo()))
 		    throw new PhoneNoException("invalid phone number");
 			user.setPhoneNo(userDto.getPhoneNo());
-
-
 
 		Optional<User> user2=userRepository.findByPhoneNo(userDto.getPhoneNo());
     	if(user2.isPresent())
@@ -73,24 +62,37 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
-    public Optional<User> gatUserByUserName(String userName){
+    public UserDtos gatUserByUserName(String userName){
 	   Optional<User> user=userRepository.findByUserName(userName);
        if(user.isEmpty()) {
        	throw new UserNameException("account not found with this username");
 	   }
-		return user;
+         UserDtos userDtos =new UserDtos();
+         userDtos.setUserId(user.get().getUserId());
+         userDtos.setUserName(user.get().getUserName());
+         userDtos.setFullName(user.get().getFullName());
+         userDtos.setPhoneNo(user.get().getPhoneNo());
+         userDtos.setEmail(user.get().getEmail());
+		return userDtos;
 	}
 
 	@Override
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
-	}
+	public List<UserDtos> getAllUsers() {
 
-	@Override
-	public Optional<List<User>> getUsersByRole(String role) {
-		Optional<List<User>> users = userRepository.findUserByRole(role);
+		List<UserDtos> users= new ArrayList<>();
+		List<User> user=userRepository.findUserByRole("USER").get();
+		for (User user1:user) {
+			UserDtos dtos= new UserDtos();
+			dtos.setUserId(user1.getUserId());
+			dtos.setUserName(user1.getUserName());
+			dtos.setFullName(user1.getFullName());
+			dtos.setEmail(user1.getEmail());
+			dtos.setPhoneNo(user1.getPhoneNo());
+			users.add(dtos);
+		}
 		return users;
 	}
+
 
 	@Override
 	public String updateUser(UserDto userDto) {
@@ -105,18 +107,6 @@ public class UserServiceImpl implements UserService{
 			throw new NameException("Name can't be blank");
 		user.setFullName(userDto.getFullName());
 
-		if(userDto.getAge()<18 || userDto.getAge()>81)
-			throw new InvalidAgeException("please enter valid age");
-		user.setAge(userDto.getAge());
-
-		if(userDto.getRole().name().contains("USER") || userDto.getRole().name().contains("WASHER")) {
-			user.setRole(userDto.getRole());
-		}else {
-			throw new InvalidRoleException("choose either USER or WASHER");
-		}
-
-		user.setGender(userDto.getGender());
-
 		if(!(userDto.getEmail().contains("@")) && (userDto.getEmail().contains(".")))
 			throw new InvalidEmailException("please enter valid email");
 		user.setEmail(userDto.getEmail());
@@ -126,6 +116,8 @@ public class UserServiceImpl implements UserService{
 		user.setPhoneNo(userDto.getPhoneNo());
 
 
+		Role role= Role.USER;
+		user.setRole(role);
 
 		Optional<User> user2=userRepository.findByPhoneNo(userDto.getPhoneNo());
 		if(user2.isPresent())
@@ -164,17 +156,8 @@ public class UserServiceImpl implements UserService{
 			throw new NameException("Name can't be blank");
 		user.setFullName(userDto.getFullName());
 
-		if(userDto.getAge()<18 || userDto.getAge()>81)
-			throw new InvalidAgeException("please enter valid age");
-		user.setAge(userDto.getAge());
-
-		if(userDto.getRole().name().contains("ADMIN")) {
-			user.setRole(userDto.getRole());
-		}else {
-			throw new InvalidRoleException("choose ADMIN to create admin account");
-		}
-
-		user.setGender(userDto.getGender());
+		Role role=Role.ADMIN;
+			user.setRole(role );
 
 		if(!(userDto.getEmail().contains("@")) && (userDto.getEmail().contains(".")))
 			throw new InvalidEmailException("please enter valid email");
@@ -214,6 +197,12 @@ public class UserServiceImpl implements UserService{
 
 
 
+	}
+
+	@Override
+	public Boolean userExistByUserName(String userName) {
+    	 Boolean user= userRepository.existByUserName(userName);
+       return user;
 	}
 
 }

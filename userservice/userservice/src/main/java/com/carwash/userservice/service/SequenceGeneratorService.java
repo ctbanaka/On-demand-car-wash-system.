@@ -33,6 +33,6 @@ public class SequenceGeneratorService {
                         DbSequence.class);
 
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
-       // return !Objects.isNull(counter)?counter.getSeq(): 1;
+
     }
 }

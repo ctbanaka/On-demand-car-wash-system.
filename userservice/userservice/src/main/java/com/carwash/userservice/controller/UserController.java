@@ -3,6 +3,7 @@ package com.carwash.userservice.controller;
 import com.carwash.userservice.model.LoginResponse;
 import com.carwash.userservice.model.User;
 import com.carwash.userservice.model.UserDto;
+import com.carwash.userservice.model.UserDtos;
 import com.carwash.userservice.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*",maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -19,6 +21,7 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/user/signup")
     public ResponseEntity<String> createCustomer(@RequestBody UserDto user){
         userService.createUser(user);
@@ -26,24 +29,20 @@ public class UserController {
     }
 
     @GetMapping("/user/{userName}")
-    public ResponseEntity<Optional<User>>getUserByUserName(@PathVariable String userName){
-       Optional<User> user= userService.gatUserByUserName(userName);
+    public ResponseEntity <UserDtos>getUserByUserName(@PathVariable String userName){
+         UserDtos user= userService.gatUserByUserName(userName);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/allusers")
-    public ResponseEntity<List<User>> getAllUsers(){
-     List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<UserDtos>> getAllUsers(){
+     List<UserDtos> users = userService.getAllUsers();
      return new ResponseEntity<>(users,HttpStatus.OK);
     }
 
-    @GetMapping("/users/{role}")
-    public ResponseEntity<Optional<List<User>>> getUsersByRoles(@PathVariable String role){
-        Optional<List<User>> users = userService.getUsersByRole(role);
-        return new ResponseEntity<>(users,HttpStatus.OK);
-    }
 
-    @PutMapping("/userupdate")
+
+    @PutMapping("/user/update")
     public ResponseEntity<String> updateUser(@RequestBody  UserDto userDto){
         userService.updateUser(userDto);
         return new ResponseEntity<>("account updated successfully", HttpStatus.OK);
@@ -65,5 +64,11 @@ public class UserController {
     public  ResponseEntity<LoginResponse> loginResponse(@PathVariable String userName){
         LoginResponse response=userService.userLoginResponse(userName);
         return new ResponseEntity<>(response,HttpStatus.OK) ;
+   }
+
+   @GetMapping("/exist/{userName}")
+    public ResponseEntity<Boolean> checkUserExist(@PathVariable("userName") String userName){
+        Boolean user=userService.userExistByUserName(userName);
+        return new ResponseEntity<Boolean>(user,HttpStatus.OK);
    }
 }

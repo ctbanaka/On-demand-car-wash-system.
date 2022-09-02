@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/package")
 public class PackageController {
@@ -29,9 +30,10 @@ public class PackageController {
 		return new ResponseEntity<String>("Plan updated",HttpStatus.OK);
 	}
 
-	@GetMapping("/{packageId}")
-	public ResponseEntity<Optional<Package>> getPackageByPackageId(@PathVariable String packageId){
-		Optional<Package> aPackage=packageService.getPackageByPackageId(packageId);
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping("/{packageName}")
+	public ResponseEntity<Optional<Package>> getPackageByPackageId(@PathVariable String packageName){
+		Optional<Package> aPackage=packageService.getPackageByPackageId(packageName);
 		return new ResponseEntity<>(aPackage,HttpStatus.OK);
 	}
 
@@ -41,9 +43,9 @@ public class PackageController {
 		return new ResponseEntity<>(packages,HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{packageId}")
-	public ResponseEntity<String> deletePlan(@PathVariable String packageId){
-		packageService.deletePackage(packageId);
+	@DeleteMapping("/{packageName}")
+	public ResponseEntity<String> deletePlan(@PathVariable String packageName){
+		packageService.deletePackage(packageName);
 		return new ResponseEntity<>("Plan deleted",HttpStatus.OK);
 	}
 

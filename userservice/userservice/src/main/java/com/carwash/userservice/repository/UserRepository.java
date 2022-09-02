@@ -7,13 +7,16 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends MongoRepository<User,String> {
+public interface UserRepository extends MongoRepository<User,Integer> {
 
     @Query("{userName:'?0'}")
     Optional<User> findByUserName(String userName);
 
     @Query("{phoneNo:'?0'}")
     Optional<User> findByPhoneNo(String phoneNo);
+
+    @Query(value = "{userName:'?0'}",exists = true)
+    Boolean existByUserName(String userName);
 
     @Query(value="{userName:'?0'}", delete = true)
      void deleteByUserName(String userName);
@@ -23,4 +26,5 @@ public interface UserRepository extends MongoRepository<User,String> {
 
     @Query("{userName:'?0'}")
     User getByUserName(String userName);
+
 }

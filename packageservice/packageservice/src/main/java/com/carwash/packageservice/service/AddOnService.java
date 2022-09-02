@@ -7,8 +7,8 @@ import java.util.List;
 public interface AddOnService {
 
     AddOn createAddOn(AddOn addOn);
-    AddOn updateAddon(String addOnName);
+    AddOn updateAddon(AddOn addOn);
     List<AddOn>  getAddonList();
     AddOn getAddOnByName(String addOnName);
-    String deleteAddOn(String addOnName);
+    void deleteAddOn(String addOnName);
 }

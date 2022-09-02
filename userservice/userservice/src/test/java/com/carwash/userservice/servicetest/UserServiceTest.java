@@ -12,8 +12,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.carwash.userservice.model.Gender.MALE;
-import static com.carwash.userservice.model.Role.USER;
 import static com.carwash.userservice.model.Role.WASHER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -40,20 +38,17 @@ public class UserServiceTest {
     @Test
     void testGetUsers(){
         when(userRepository.findAll()).thenReturn(Stream
-           .of(new User(100,"max", "maxwell", MALE, "9538836988", "chetan@g.com", "helloo12",  23, WASHER,true),
-             new User(101,"maxi", "maxwell", MALE, "9538836987", "chetan@g.com", "helloo12",  23, WASHER,true)).collect(Collectors.toList()));
+           .of(new User(100,"max", "maxwell","9538836988","chetan@g.com", "helloo12",  WASHER,true),
+             new User(101,"maxi", "maxwell",  "9538836987", "chetan@g.com", "helloo12",  WASHER,true)).collect(Collectors.toList()));
         assertEquals(2, userService.getAllUsers().size());
     }
 
     @Test
     void testAddUser() {
-        UserDto userDto = new UserDto("max", "maxwell", MALE, 23, WASHER, "9538836988", "chetan@gmail.com", "hello123");
+        UserDto userDto = new UserDto("max", "maxwell", "9538836988", "chetan@gmail.com", "hello123");
         User user = new User();
         user.setUserName("max");
-        user.setGender(MALE);
-        user.setRole(USER);
         user.setPhoneNo("9538836987");
-        user.setAge(23);
         user.setFullName("maxwell");
         user.setEmail("chetan@gmail.com");
         user.setPassword("hello123");
@@ -65,6 +60,5 @@ public class UserServiceTest {
         assertEquals(user.getUserName(), userInfo.getUserName());
         assertEquals(user.getEmail(), userInfo.getEmail());
         assertNotEquals(user.getPhoneNo(), userInfo.getPhoneNo());
-        assertNotEquals(user.getRole(), userInfo.getRole());
     }
 }

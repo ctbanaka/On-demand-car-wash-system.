@@ -28,8 +28,8 @@ public class AuthenticationRequest implements Serializable {
 
 	}
 
-	public AuthenticationRequest(String username, String password) {
-		this.userName = username;
+	public AuthenticationRequest(String userName, String password) {
+		this.userName = userName;
 		this.password = password;
 	}
 }

@@ -19,18 +19,19 @@ public class User {
 
     @Transient
     public static final String SEQUENCE_NAME = "user_sequence";
-     @Id
+
+    @Id
     private int userId;
     private String userName;
     @NonNull
     private String fullName;
-    private Gender gender;
+
     @NonNull
     private String phoneNo;
     private String email;
     @NonNull
     private String password;
-    private int age;
+
     @NonNull
     private Role role;
     private Boolean isActive;
