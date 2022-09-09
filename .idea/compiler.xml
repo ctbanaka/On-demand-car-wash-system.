@@ -11,8 +11,6 @@
         <module name="discovery" />
         <module name="userservice" />
         <module name="api-gateway" />
-        <module name="promocode-service" />
-        <module name="locationservice" />
         <module name="order-service" />
         <module name="washer-service" />
       </profile>

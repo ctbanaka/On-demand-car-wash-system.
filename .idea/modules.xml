@@ -4,10 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/api-gateway/api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/api-gateway/api-gateway/api-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/discovery/discovery.iml" filepath="$PROJECT_DIR$/discovery/discovery.iml" />
-      <module fileurl="file://$PROJECT_DIR$/locationservice/locationservice/locationservice.iml" filepath="$PROJECT_DIR$/locationservice/locationservice/locationservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/order-service/order-service.iml" filepath="$PROJECT_DIR$/order-service/order-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/packageservice/packageservice/packageservice.iml" filepath="$PROJECT_DIR$/packageservice/packageservice/packageservice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/promocode-service/promocode-service/promocode-service.iml" filepath="$PROJECT_DIR$/promocode-service/promocode-service/promocode-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/userservice/userservice/userservice.iml" filepath="$PROJECT_DIR$/userservice/userservice/userservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/washer-service/washer-service/washer-service.iml" filepath="$PROJECT_DIR$/washer-service/washer-service/washer-service.iml" />
     </modules>

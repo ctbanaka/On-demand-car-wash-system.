@@ -3,9 +3,7 @@ package com.carwash.orderservice.service;
 import com.carwash.orderservice.exceptions.InvalidPromoCodeException;
 import com.carwash.orderservice.exceptions.NotFoundException;
 import com.carwash.orderservice.exceptions.UserNameException;
-import com.carwash.orderservice.model.Car;
-import com.carwash.orderservice.model.Order;
-import com.carwash.orderservice.model.OrderAccept;
+import com.carwash.orderservice.model.*;
 import com.carwash.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
@@ -23,6 +21,11 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private SequenceGeneratorService seqService;
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private WasherService washerService;
 
     @Override
     public int placeOrder(Order order) {
@@ -121,9 +124,39 @@ public class OrderServiceImpl implements OrderService{
         return orderRepository.existsById(orderId);
     }
 
+    public OrderDetails getOrderDetails(int orderId){
+        Order order=orderRepository.getOrderByOrderId(orderId);
+        OrderDetails orderDetails=new OrderDetails();
+
+        orderDetails.setOrderId(order.getOrderId());
+        orderDetails.setCity(order.getCity());
+        orderDetails.setStreet(order.getStreet());
+        orderDetails.setPincode(order.getPincode());
+        orderDetails.setCarBrand(order.getCarBrand());
+        orderDetails.setModel(order.getModel());
+        orderDetails.setColor(order.getColor());
+        orderDetails.setPackageName(order.getPackageName());
+        orderDetails.setOrderStatus(order.getOrderStatus());
+        orderDetails.setTotalPrice(order.getTotalPrice());
+        orderDetails.setPlacedOn(order.getPlacedOn());
+
+        UserDtos userDtos = userService.getUser(order.getUserName());
+
+        orderDetails.setUserName(userDtos.getUserName());
+        orderDetails.setFullName(userDtos.getFullName());
+        orderDetails.setPhoneNo(userDtos.getPhoneNo());
+        orderDetails.setEmail(userDtos.getEmail());
+
+        WasherDto washerDto= washerService.getWasher(order.getWasherName());
+        orderDetails.setWasherName(washerDto.getUserName());
+        orderDetails.setWasherphoneNo(washerDto.getPhoneNo());
+        orderDetails.setWasheremail(washerDto.getEmail());
+        orderDetails.setWasherFullName(washerDto.getFullName());
+
+        return orderDetails;
+
+    }
+
 }
 
-//   String promoUrl="http://localhost:8088/promocode/promo/"+order.getPromocodeId();
-// Boolean value= restTemplate.getForObject(promoUrl,Boolean.class);
-// if(!value)
-//   throw new InvalidPromoCodeException("incorrect promocode");
+

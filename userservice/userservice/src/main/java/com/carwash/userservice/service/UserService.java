@@ -1,9 +1,6 @@
 package com.carwash.userservice.service;
 
-import com.carwash.userservice.model.LoginResponse;
-import com.carwash.userservice.model.User;
-import com.carwash.userservice.model.UserDto;
-import com.carwash.userservice.model.UserDtos;
+import com.carwash.userservice.model.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +13,7 @@ public interface UserService {
 
     List<UserDtos> getAllUsers();
 
-    String updateUser(UserDto userDto);
+    String updateUser(UserUpdate userDto);
 
     void deleteUser(String userName);
 

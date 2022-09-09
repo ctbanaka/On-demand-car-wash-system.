@@ -3,6 +3,7 @@ package com.carwash.orderservice.controller;
 import com.carwash.orderservice.model.Address;
 import com.carwash.orderservice.model.Order;
 import com.carwash.orderservice.model.OrderAccept;
+import com.carwash.orderservice.model.OrderDetails;
 import com.carwash.orderservice.service.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,4 +77,11 @@ public class OrderController {
         List<Order> orders=orderService.getOrdersByOrderStatus(orderStatus);
         return new ResponseEntity<>(orders,HttpStatus.OK);
    }
+
+   @GetMapping("/orderdetail/{orderId}")
+    public ResponseEntity<OrderDetails> getOrderDetails(@PathVariable int orderId){
+        OrderDetails orderDetails= orderService.getOrderDetails(orderId);
+        return new ResponseEntity<>(orderDetails,HttpStatus.OK);
+   }
+
 }

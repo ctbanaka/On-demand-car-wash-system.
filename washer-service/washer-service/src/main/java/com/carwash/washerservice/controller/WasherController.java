@@ -2,6 +2,7 @@ package com.carwash.washerservice.controller;
 
 import com.carwash.washerservice.model.Washer;
 import com.carwash.washerservice.model.WasherDto;
+import com.carwash.washerservice.model.WasherUpdate;
 import com.carwash.washerservice.service.WasherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class WasherController {
 
 
     @PutMapping("/washer/update")
-    public ResponseEntity<String> updateUser(@RequestBody   Washer washer){
+    public ResponseEntity<String> updateUser(@RequestBody WasherUpdate washer){
         washerService.updateUser(washer);
         return new ResponseEntity<>("account updated successfully", HttpStatus.OK);
     }

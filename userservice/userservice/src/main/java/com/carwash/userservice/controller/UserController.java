@@ -1,9 +1,6 @@
 package com.carwash.userservice.controller;
 
-import com.carwash.userservice.model.LoginResponse;
-import com.carwash.userservice.model.User;
-import com.carwash.userservice.model.UserDto;
-import com.carwash.userservice.model.UserDtos;
+import com.carwash.userservice.model.*;
 import com.carwash.userservice.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +40,7 @@ public class UserController {
 
 
     @PutMapping("/user/update")
-    public ResponseEntity<String> updateUser(@RequestBody  UserDto userDto){
+    public ResponseEntity<String> updateUser(@RequestBody UserUpdate userDto){
         userService.updateUser(userDto);
         return new ResponseEntity<>("account updated successfully", HttpStatus.OK);
     }

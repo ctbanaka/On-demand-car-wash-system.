@@ -1,8 +1,10 @@
 package com.carwash.washerservice.service;
 
 import com.carwash.washerservice.exception.*;
+import com.carwash.washerservice.model.Gender;
 import com.carwash.washerservice.model.Washer;
 import com.carwash.washerservice.model.WasherDto;
+import com.carwash.washerservice.model.WasherUpdate;
 import com.carwash.washerservice.repository.WasherRepository;
 import com.carwash.washerservice.util.PhoneNumberValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +68,7 @@ public class WasherServiceImpl implements WasherService{
     @Override
     public WasherDto gatWasherByUserName(String userName) {
         Washer user=washerRepository.findByUserName(userName)
-                .orElseThrow(()->new UserNameException("account not found with this username"));
+                .orElse(new Washer(0,"NA","order Not Accepted yet plz wait ",Gender.MALE,"","","",00,"",false));
          WasherDto dto= new WasherDto();
          dto.setUserId(user.getUserId());
          dto.setUserName(user.getUserName());
@@ -99,7 +101,7 @@ public class WasherServiceImpl implements WasherService{
     }
 
     @Override
-    public String updateUser(Washer washerDto) {
+    public String updateUser(WasherUpdate washerDto) {
         Optional<Washer> user1=washerRepository.findByUserName(washerDto.getUserName());
         if(user1.isEmpty())
             throw new UserNameException("account not found with this username");
@@ -114,6 +116,7 @@ public class WasherServiceImpl implements WasherService{
         if(!PhoneNumberValidation.isValidMobileNo(washerDto.getPhoneNo()))
             throw new PhoneNoException("invalid phone number");
         user.setPhoneNo(washerDto.getPhoneNo());
+        user.setAge(washerDto.getAge());
         washerRepository.save(user);
         return user.getUserName();
     }

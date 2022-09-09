@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public String updateUser(UserDto userDto) {
+	public String updateUser(UserUpdate userDto) {
 		Optional<User> user1=userRepository.findByUserName(userDto.getUserName());
     	if(user1.isEmpty())
     		throw new UserNameException("account not found with this username");
@@ -118,15 +118,7 @@ public class UserServiceImpl implements UserService{
 
 		Role role= Role.USER;
 		user.setRole(role);
-
-		Optional<User> user2=userRepository.findByPhoneNo(userDto.getPhoneNo());
-		if(user2.isPresent())
-			throw new PhoneNoException("someone is rigistered with this number enter new");
 		user.setPhoneNo(userDto.getPhoneNo());
-
-		if(userDto.getPassword().length()<8)
-			throw new PasswordException("password should be more then 8 charecters");
-		user.setPassword(userDto.getPassword());
 
 		user.setIsActive(true);
 		userRepository.save(user);

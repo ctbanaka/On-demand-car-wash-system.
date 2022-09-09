@@ -1,6 +1,8 @@
 package com.carwash.orderservice;
 
 import com.carwash.orderservice.service.OrderServiceImpl;
+import com.carwash.orderservice.service.UserService;
+import com.carwash.orderservice.service.WasherService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +30,17 @@ public class OrderServiceApplication {
 	public OrderServiceImpl getBean(){
 		return new OrderServiceImpl();
 	}
+
+	@Bean
+	public UserService getUserService(){
+		return new UserService();
+	}
+
+	@Bean
+	public WasherService getWasherService(){
+		return new WasherService();
+	}
+
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer()

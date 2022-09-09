@@ -11,9 +11,7 @@
         <option value="$PROJECT_DIR$/api-gateway (1)/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/api-gateway/api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/order-service/pom.xml" />
-        <option value="$PROJECT_DIR$/promocode-service/promocode-service/pom.xml" />
         <option value="$PROJECT_DIR$/washer-service/washer-service/pom.xml" />
-        <option value="$PROJECT_DIR$/locationservice/locationservice/pom.xml" />
       </list>
     </option>
   </component>

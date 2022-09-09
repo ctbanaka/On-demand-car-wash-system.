@@ -1,4 +1,4 @@
-package com.carwash.washerservice.model;
+package com.carwash.orderservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,4 +18,10 @@ public class WasherDto {
     private int age;
     private Boolean isActive;
 
+    public WasherDto(String userName, String fullName, String phoneNo, String email) {
+        this.userName = userName;
+        this.fullName = fullName;
+        this.phoneNo = phoneNo;
+        this.email = email;
+    }
 }

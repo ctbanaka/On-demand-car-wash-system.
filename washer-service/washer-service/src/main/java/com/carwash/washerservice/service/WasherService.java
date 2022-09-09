@@ -2,6 +2,7 @@ package com.carwash.washerservice.service;
 
 import com.carwash.washerservice.model.Washer;
 import com.carwash.washerservice.model.WasherDto;
+import com.carwash.washerservice.model.WasherUpdate;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public interface WasherService {
 
     List<WasherDto> getAllWashers();
 
-    String updateUser(Washer washer);
+    String updateUser(WasherUpdate washer);
 
     void deleteUser(String userName);
 
